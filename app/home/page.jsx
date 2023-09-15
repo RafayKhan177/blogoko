@@ -1,5 +1,4 @@
-import React from "react";
-import { Container, Typography, Grid, Card, CardContent } from "@mui/material";
+import { Container, Grid, Card, CardContent } from "@mui/material";
 import { BlogCard, Heading } from "../components";
 
 const Category = ({ category }) => (
@@ -61,12 +60,10 @@ export default function Home() {
   ];
 
   return (
-    <div >
+    <div>
       {/* Categories */}
       <Container mt={4}>
-        <Typography variant="h5" gutterBottom>
-          Categories
-        </Typography>
+        <Heading txt={"Categories"} />
         <Grid container spacing={2}>
           {categories.map((category, index) => (
             <Category key={index} category={category} />
@@ -76,9 +73,7 @@ export default function Home() {
 
       {/* Trending Blogs */}
       <Container mt={4}>
-        <Typography variant="h5" gutterBottom>
-          <Heading txt={"Trending Blogs"} />
-        </Typography>
+        <Heading txt={"Trending Blogs"} />
         <Grid container spacing={2}>
           {trendingBlogs.map((blog, index) => (
             <Blog key={index} blog={blog} />
@@ -88,9 +83,7 @@ export default function Home() {
 
       {/* Other Blogs */}
       <Container mt={4}>
-        <Typography variant="h5" gutterBottom>
-          <Heading txt={"Other Blogs"} />
-        </Typography>
+        <Heading txt={"Other Blogs"} />
         <Grid container spacing={2}>
           {otherBlogs.map((blog, index) => (
             <Blog key={index} blog={blog} />
