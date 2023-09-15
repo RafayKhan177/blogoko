@@ -17,6 +17,7 @@ import {
   Search as SearchIcon,
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
+import Link from "next/link";
 
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -30,7 +31,11 @@ export default function TopBar() {
   };
 
   const pages = ["home", "account", "categories", "feature"];
-  const menu = ["account", "upload/blog", "logout"];
+  const menu = [
+    { name: "account", url: "/account" },
+    { name: "upload blog", url: "/upload/blog" },
+    { name: "logout", url: "logout" },
+  ];
 
   return (
     <AppBar position="static" className="bg-gray-800">
@@ -50,7 +55,7 @@ export default function TopBar() {
           >
             {menu.map((menu, ind) => (
               <MenuItem key={ind} onClick={handleMenuClose}>
-                {menu}
+                <Link href={menu.url}>{menu.name}</Link>
               </MenuItem>
             ))}
           </Menu>
@@ -66,11 +71,18 @@ export default function TopBar() {
         <div className="hidden md:flex space-x-4">
           {" "}
           {/* Hide on small screens */}
-          {pages.map((page,ind)=>(
-          <Button key={ind} color="inherit" className="capitalize" href={page}>
-            page
-          </Button>
-
+          {pages.map((page, ind) => (
+            <Button
+              key={ind}
+              color="inherit"
+              className="capitalize"
+              >
+                <Link
+              href={`${'/'}${page}`}
+                >
+              {page}
+                </Link>
+            </Button>
           ))}
           {/* Add more navigation links as needed */}
         </div>
