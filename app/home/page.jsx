@@ -19,7 +19,12 @@ const Blog = ({ blog }) => {
 
 export default function Home() {
   // Data
-  const categories = ["Category 1", "Category 2", "Category 3", "Category 4"];
+  const categories = [
+    "Self-Care and Mental Health",
+    "Sustainability and Green Living",
+    "Fitness and Wellness Blogs",
+    "Space and Astronomy",
+  ];
   const trendingBlogs = [
     {
       name: "TechTrends Today",
@@ -62,7 +67,7 @@ export default function Home() {
   return (
     <div>
       {/* Categories */}
-      <Container mt={4}>
+      <Container className="text-sm text-center font-bold text-teal-950" mt={4}>
         <Heading txt={"Categories"} />
         <Grid container spacing={2}>
           {categories.map((category, index) => (
@@ -72,7 +77,7 @@ export default function Home() {
       </Container>
 
       {/* Trending Blogs */}
-      <Container mt={4}>
+      <Container className="text-center" mt={4}>
         <Heading txt={"Trending Blogs"} />
         <Grid container spacing={2}>
           {trendingBlogs.map((blog, index) => (
@@ -82,7 +87,7 @@ export default function Home() {
       </Container>
 
       {/* Other Blogs */}
-      <Container mt={4}>
+      <Container className="text-center" mt={4}>
         <Heading txt={"Other Blogs"} />
         <Grid container spacing={2}>
           {otherBlogs.map((blog, index) => (

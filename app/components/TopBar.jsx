@@ -38,7 +38,7 @@ export default function TopBar() {
   ];
 
   return (
-    <AppBar position="static" className="bg-gray-800">
+    <AppBar position="static" className="bg-teal-950">
       <Toolbar>
         <IconButton
           onClick={handleMenuOpen}
@@ -68,20 +68,16 @@ export default function TopBar() {
         >
           BlogSpace
         </Typography>
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex space-x-6">
           {" "}
           {/* Hide on small screens */}
           {pages.map((page, ind) => (
             <Button
               key={ind}
               color="inherit"
-              className="capitalize"
-              >
-                <Link
-              href={`${'/'}${page}`}
-                >
-              {page}
-                </Link>
+              className="capitalize  hover:text-teal-900"
+            >
+              <Link href={`${"/"}${page}`}>{page}</Link>
             </Button>
           ))}
           {/* Add more navigation links as needed */}
@@ -91,17 +87,20 @@ export default function TopBar() {
             {/* Search bar */}
             <Paper
               component="form"
+              className="bg-white h-10 px-5 pr-5 rounded-full text-sm"
               sx={{
                 p: "2px 4px",
                 display: "flex",
                 alignItems: "center",
-                width: "400px", // Adjust the width as needed
+                width: "250px", // Adjust the width as needed
               }}
             >
               <InputBase
                 sx={{ flex: 1 }}
+                type="search"
                 placeholder="Search blogs & authors"
                 inputProps={{ "aria-label": "search blogs & authors" }}
+                className="text-sm"
               />
               <SearchIcon />
             </Paper>
