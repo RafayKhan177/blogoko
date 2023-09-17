@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,9 +17,10 @@ import {
   AccountCircle as AccountCircleIcon,
 } from "@mui/icons-material";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function TopBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,9 +32,9 @@ export default function TopBar() {
 
   const pages = ["home", "account", "categories", "feature"];
   const menu = [
-    { name: "account", url: "/account" },
-    { name: "upload blog", url: "/upload/blog" },
-    { name: "logout", url: "logout" },
+    { name: "Account", url: "/account" },
+    { name: "Upload Blog", url: "/upload/blog" },
+    { name: "Logout", url: "logout" },
   ];
 
   return (
@@ -47,20 +47,22 @@ export default function TopBar() {
           aria-label="user profile"
           className="mr-2"
         >
-          {/* User menu */}
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleMenuClose}
-          >
-            {menu.map((menu, ind) => (
-              <MenuItem key={ind} onClick={handleMenuClose}>
-                <Link href={menu.url}>{menu.name}</Link>
-              </MenuItem>
-            ))}
-          </Menu>
           <Avatar alt="User" src="/path-to-profile-picture.jpg" />
         </IconButton>
+        
+        {/* User menu */}
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={handleMenuClose}
+        >
+          {menu.map((menu, ind) => (
+            <MenuItem key={ind} onClick={handleMenuClose}>
+              <Link href={menu.url}>{menu.name}</Link>
+            </MenuItem>
+          ))}
+        </Menu>
+        
         <Typography
           variant="h6"
           component="div"
@@ -69,7 +71,6 @@ export default function TopBar() {
           BlogSpace
         </Typography>
         <div className="hidden md:flex space-x-6">
-          {" "}
           {/* Hide on small screens */}
           {pages.map((page, ind) => (
             <Button
@@ -95,6 +96,7 @@ export default function TopBar() {
                 width: "250px", // Adjust the width as needed
               }}
             >
+              <SearchIcon />
               <InputBase
                 sx={{ flex: 1 }}
                 type="search"
@@ -102,7 +104,6 @@ export default function TopBar() {
                 inputProps={{ "aria-label": "search blogs & authors" }}
                 className="text-sm"
               />
-              <SearchIcon />
             </Paper>
           </div>
         </div>
