@@ -1,9 +1,29 @@
-import React from "react";
-import Head from "next/head";
+"use client"
+
+import { useState } from "react"; // Import useState
 import { Container, Paper, Typography, TextField, Button } from "@mui/material";
+import Head from "next/head";
 import Link from "next/link";
+import { signUpWithEmail } from "../firebase/functions/authentications";
 
 export default function SignUp() {
+  // Create state variables for form fields
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+  const userData = {
+    name: fullName,
+    phone: phone,
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signUpWithEmail(email, password, userData);
+  };
+
   return (
     <div>
       <Head>
@@ -16,13 +36,17 @@ export default function SignUp() {
             Sign Up
           </Typography>
 
-          <form>
+          <form onSubmit={handleSubmit}>
+            {" "}
+            {/* Add onSubmit handler */}
             <TextField
               label="Full Name"
               variant="outlined"
               fullWidth
               margin="normal"
               required
+              value={fullName} // Bind value to state
+              onChange={(e) => setFullName(e.target.value)} // Update state on change
             />
             <TextField
               label="Email"
@@ -31,12 +55,16 @@ export default function SignUp() {
               margin="normal"
               required
               type="email"
+              value={email} // Bind value to state
+              onChange={(e) => setEmail(e.target.value)} // Update state on change
             />
             <TextField
               label="Phone"
               variant="outlined"
               fullWidth
               margin="normal"
+              value={phone} // Bind value to state
+              onChange={(e) => setPhone(e.target.value)} // Update state on change
             />
             <TextField
               label="Password"
@@ -45,8 +73,9 @@ export default function SignUp() {
               margin="normal"
               required
               type="password"
+              value={password} // Bind value to state
+              onChange={(e) => setPassword(e.target.value)} // Update state on change
             />
-
             <Button
               variant="contained"
               color="primary"
@@ -61,7 +90,7 @@ export default function SignUp() {
           <Typography variant="body2" className="mt-4">
             Already have an account?{" "}
             <Link href="/login" className="text-blue-500">
-            Log In
+              Log In
             </Link>
           </Typography>
         </Paper>
