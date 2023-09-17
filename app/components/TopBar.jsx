@@ -1,5 +1,6 @@
-"use client";
+"use client"
 
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,12 +13,16 @@ import {
   IconButton,
   Avatar,
 } from "@mui/material";
-import {
-  Search as SearchIcon,
-  AccountCircle as AccountCircleIcon,
-} from "@mui/icons-material";
+import { Search as SearchIcon } from "@mui/icons-material";
 import Link from "next/link";
-import { useState } from "react";
+
+const pages = ["home", "account", "categories", "feature"];
+
+const menuItems = [
+  { name: "Account", url: "/account" },
+  { name: "Upload Blog", url: "/upload/blog" },
+  { name: "Logout", url: "/logout" },
+];
 
 export default function TopBar() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,13 +34,6 @@ export default function TopBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
-  const pages = ["home", "account", "categories", "feature"];
-  const menu = [
-    { name: "Account", url: "/account" },
-    { name: "Upload Blog", url: "/upload/blog" },
-    { name: "Logout", url: "logout" },
-  ];
 
   return (
     <AppBar position="static" className="bg-teal-950">
@@ -49,20 +47,20 @@ export default function TopBar() {
         >
           <Avatar alt="User" src="/path-to-profile-picture.jpg" />
         </IconButton>
-        
+
         {/* User menu */}
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          {menu.map((menu, ind) => (
-            <MenuItem key={ind} onClick={handleMenuClose}>
-              <Link href={menu.url}>{menu.name}</Link>
+          {menuItems.map((menuItem, index) => (
+            <MenuItem key={index} onClick={handleMenuClose}>
+              <Link href={menuItem.url}>{menuItem.name}</Link>
             </MenuItem>
           ))}
         </Menu>
-        
+
         <Typography
           variant="h6"
           component="div"
@@ -70,19 +68,21 @@ export default function TopBar() {
         >
           BlogSpace
         </Typography>
+
         <div className="hidden md:flex space-x-6">
           {/* Hide on small screens */}
-          {pages.map((page, ind) => (
+          {pages.map((page, index) => (
             <Button
-              key={ind}
+              key={index}
               color="inherit"
-              className="capitalize  hover:text-teal-900"
+              className="capitalize hover:text-teal-900"
             >
-              <Link href={`${"/"}${page}`}>{page}</Link>
+              <Link href={`/${page}`}>{page}</Link>
             </Button>
           ))}
           {/* Add more navigation links as needed */}
         </div>
+
         <div className="ml-auto flex">
           <div className="md:flex space-x-4 ml-4">
             {/* Search bar */}
