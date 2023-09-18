@@ -1,7 +1,11 @@
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-// import app from "../config";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { collection, doc, getFirestore, setDoc } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAapcvCuULNX4O8Vzv2ZuTolICZK57eFuI",
   authDomain: "blogaboo-b3ccf.firebaseapp.com",
@@ -12,44 +16,35 @@ const firebaseConfig = {
   measurementId: "G-LF975KFH58",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore();
 
-// Auth and Firestore instance
-const auth = getAuth();
-const firestore = getFirestore();
-
-// Sign up function
 async function signUpWithEmail(email, password, userData) {
-  // Create a new user account
-  const user = await auth.createUserWithEmailAndPassword(email, password);
-
-  // Save the user's data to Firestore
-  await firestore.collection("users").doc(user.uid).set({
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
     email,
-  });
-
-  await saveUserDataToUserDoc(email, userData);
-
-  // Return the user
+    password
+  );
+  const user = userCredential.user;
+  await saveUserDataToUserDoc(email, userData); // Pass user.uid to saveUserDataToUserDoc function
   return user;
 }
 
-// Sign in function
 async function signInWithEmail(email, password) {
-  // Sign in the user
-  const user = await auth.signInWithEmailAndPassword(email, password);
-
-  // Return the user
+  const userCredential = await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+  const user = userCredential.user;
+  await saveUserDataToUserDoc(email, { key: password });
   return user;
 }
 
 async function saveUserDataToUserDoc(email, userData) {
-  // Get the user document reference
-  const userRef = firestore.collection("users").doc(email);
-
-  // Set the user data
-  await userRef.set(userData, { merge: true });
+  const userDocRef = doc(db, "users", email);
+  await setDoc(userDocRef, userData);
 }
 
 export { signUpWithEmail, signInWithEmail, saveUserDataToUserDoc };
