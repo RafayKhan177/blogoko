@@ -8,7 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     signInWithEmail(email, pass);
   };
 
