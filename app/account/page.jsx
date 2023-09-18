@@ -1,13 +1,20 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { Avatar, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import EditIcon from '@mui/icons-material/Edit';
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import React, { useState } from "react";
+import {
+  Avatar,
+  Button,
+  Container,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
 const MyAccount = () => {
   const [fullName, setFullName] = useState(""); // State for Full Name
-  const [phone, setPhone] = useState("");       // State for Phone
+  const [phone, setPhone] = useState(""); // State for Phone
   const [profilePicture, setProfilePicture] = useState(null); // State for Profile Picture
   const [isEditing, setIsEditing] = useState(false); // State for edit mode
 
@@ -37,15 +44,18 @@ const MyAccount = () => {
           <Avatar className="w-20 h-20 mb-4" src={profilePicture}>
             {/* Display user's profile picture here */}
           </Avatar>
-          <label htmlFor="profilePicture" className="absolute top-0 right-0 cursor-pointer p-1 bg-slate-100 rounded-full">
-            <PhotoCameraIcon className='w-5'/>
+          <label
+            htmlFor="profilePicture"
+            className="absolute top-0 right-0 cursor-pointer p-1 bg-slate-100 rounded-full"
+          >
+            <PhotoCameraIcon className="w-5" />
           </label>
         </div>
         <input
           type="file"
           accept="image/*"
           id="profilePicture"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           onChange={handleProfilePictureChange}
         />
         <Typography component="h1" variant="h5">
@@ -91,7 +101,7 @@ const MyAccount = () => {
               fullWidth
               variant="contained"
               color="primary"
-              className="mb-4"
+              className="mb-4 bg-green-700 hover:bg-green-900"
             >
               Edit
             </Button>
@@ -101,6 +111,7 @@ const MyAccount = () => {
           fullWidth
           variant="contained"
           color="secondary"
+          className="bg-red-700 hover:bg-red-900"
         >
           Convert Account to Professional
         </Button>
