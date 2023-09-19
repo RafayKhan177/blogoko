@@ -29,7 +29,7 @@ import {
   IconCoin,
   IconChevronDown,
 } from '@tabler/icons-react';
-import classes from './HeaderTabs.module.css';
+import classes from './AppBar.module.css';
 
 const mockdata = [
   {
@@ -64,7 +64,7 @@ const mockdata = [
   },
 ];
 
-export function Navbar() {
+export function AppBar() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
