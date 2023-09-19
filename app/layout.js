@@ -1,13 +1,12 @@
 //-------------------------------------DEPENDENCIES
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
-import { ToastContainer } from "react-toastify";
-import { Inter } from "next/font/google";
+// import { ToastContainer } from "react-toastify";
+// import { Inter } from "next/font/google";
 //-------------------------------------COMPONENTS
 //--------------------------------------STYLES
 import "react-toastify/dist/ReactToastify.css";
 import "@mantine/core/styles.css";
 import "./globals.css";
-import { AppBar, HeroBullets } from "./components/Index";
 
 export const metadata = {
   title: "My Mantine app",
@@ -22,10 +21,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <MantineProvider>
-          <AppBar />
           {children}
-          <HeroBullets />
-          <ToastContainer />
         </MantineProvider>
       </body>
     </html>
