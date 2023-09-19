@@ -1,9 +1,11 @@
+"use client"
+
 import { Image, Container, Title, Button, Group, Text, List, ThemeIcon, rem } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
 import image from '../../assets/peoplesReadingBooks.jpg';
 import classes from './HeroBullets.module.css';
 
-export function HeroBullets() {
+export default function HeroBullets() {
   return (
     <Container size="md">
       <div className={classes.inner}>
