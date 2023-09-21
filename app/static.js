@@ -42,6 +42,7 @@ const blogsCategories = [
 
 const blogData = [
   {
+    blogID:'dsaijbbqoihw19u2981',
     image:
       "https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
     title: "Verudela Beach",
@@ -55,6 +56,35 @@ const blogData = [
       { label: "Sea" },
       { label: "Nature" },
       { label: "Water sports" },
+    ],
+    comments: [
+      {
+        email: "mock@gmail.com",
+        name: "Alice",
+        timestamp: "September 6, 2023",
+        content: "This place looks amazing! I can't wait to visit.",
+      },
+      {
+        id: "2",
+        name: "Bob",
+        timestamp: "September 7, 2023",
+        content: "I went there last summer, and it was fantastic!",
+      },
+    ],
+    qa: [
+      {
+        email: "mock@gmail.com",
+        name: "Alice",
+        question: "Is there a restaurant nearby?",
+        answer: "Yes, there are several restaurants within walking distance.",
+      },
+      {
+        email: "mock@gmail.com",
+        name: "Bob",
+        question: "Are pets allowed?",
+        answer:
+          "Yes, pets are allowed in some apartments. Make sure to check with the hotel.",
+      },
     ],
   },
 ];
