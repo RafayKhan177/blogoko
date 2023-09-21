@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "@mantine/core/styles.css";
 import "./globals.css";
 //-------------------------------------COMPONENTS
-import { AppBar } from "./components/appBar/AppBar";
+import {AppBar} from "./components/appBar/AppBar";
 import Footer from "./components/footer/FooterSocial";
 
 export const metadata = {
