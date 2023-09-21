@@ -7,6 +7,7 @@ import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import "react-toastify/dist/ReactToastify.css";
 import "@mantine/core/styles.css";
 import "./globals.css";
+import { AppBar } from "./components/appBar/AppBar";
 
 export const metadata = {
   title: "My Mantine app",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <MantineProvider>
+          <AppBar />
           {children}
         </MantineProvider>
       </body>
