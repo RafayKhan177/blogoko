@@ -25,44 +25,23 @@ export default function Home() {
     "Fitness and Wellness Blogs",
     "Space and Astronomy",
   ];
-  const trendingBlogs = [
-    {
-      name: "TechTrends Today",
-      description: "Stay updated on the latest tech innovations.",
-      date: "September 10, 2023",
-    },
-    {
-      name: "Healthy Living Guide",
-      description:
-        "Discover tips and tricks for maintaining a healthy lifestyle.",
-      date: "September 5, 2023",
-    },
-    {
-      name: "Traveler's Diary",
-      description:
-        "Explore exotic destinations, travel stories, and useful travel tips.",
-      date: "August 28, 2023",
-    },
-  ];
 
-  const otherBlogs = [
-    {
-      name: "Culinary Delights",
-      description: "Dive into the world of gourmet cuisine, recipes.",
-      date: "August 20, 2023",
-    },
-    {
-      name: "Financial Insights",
-      description: "Gain valuable financial knowledge, investment strategies.",
-      date: "August 15, 2023",
-    },
-    {
-      name: "Bookworm's Corner",
-      description:
-        "Immerse yourself in the world of literature with book reviews.",
-      date: "August 12, 2023",
-    },
-  ];
+  const blogData = {
+    image:
+      'https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80',
+    title: 'Verudela Beach',
+    description:
+    'Completely renovated for the season 2020, Arena Verudela Bech Apartments are fully equipped and modernly furnished 4-star self-service apartments located on the Adriatic coastline by one of the most beautiful beaches in Pula.',
+    date: "September 5, 2023",
+    category:"Space and Astronomy",
+    tags: [
+      { label: 'Sunny weather' },
+      { label: 'Onsite zoo' },
+      { label: 'Sea' },
+      { label: 'Nature' },
+      { label: 'Water sports' },
+    ],
+  };
 
   return (
     <div>
@@ -87,14 +66,6 @@ export default function Home() {
       </Container>
 
       {/* Other Blogs */}
-      <Container className="text-center" mt={4}>
-        <Heading txt={"Other Blogs"} />
-        <Grid container spacing={2}>
-          {otherBlogs.map((blog, index) => (
-            <Blog key={index} blog={blog} />
-          ))}
-        </Grid>
-      </Container>
     </div>
   );
 }
