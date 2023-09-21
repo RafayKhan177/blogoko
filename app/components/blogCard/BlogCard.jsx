@@ -1,8 +1,17 @@
-import { IconHeart } from '@tabler/icons-react';
-import { Card, Image, Text, Group, Badge, Button, ActionIcon } from '@mantine/core';
-import classes from './BlogCard.module.css';
+"use client";
+import { IconHeart } from "@tabler/icons-react";
+import {
+  Card,
+  Image,
+  Text,
+  Group,
+  Badge,
+  Button,
+  ActionIcon,
+} from "@mantine/core";
+import classes from "./BlogCard.module.css";
 
-export function BlogCard({blog}) {
+export default function BlogCard({ blog }) {
   const features = blog.tags.map((tag) => (
     <Badge variant="light" key={tag.label} leftSection={tag.emoji}>
       {tag.label}
@@ -25,7 +34,7 @@ export function BlogCard({blog}) {
           </Badge>
         </Group>
         <Text fz="sm" mt="xs">
-          {blog.description}
+          <TextWithLimit text={blog.description} charLimit={90} />
         </Text>
       </Card.Section>
 
@@ -35,6 +44,11 @@ export function BlogCard({blog}) {
         </Text>
         <Group gap={7} mt={5}>
           {blog.category}
+          {blog.tags.map((tag, index) => (
+            <Badge key={index} size="sm" variant="light">
+              {tag.label}
+            </Badge>
+          ))}
         </Group>
       </Card.Section>
 
@@ -47,5 +61,13 @@ export function BlogCard({blog}) {
         </ActionIcon>
       </Group>
     </Card>
+  );
+}
+
+function TextWithLimit({ text, charLimit }) {
+  const truncatedText =
+    text.length > charLimit ? text.slice(0, charLimit) + '...' : text;
+  return (
+    <span>{truncatedText}</span>
   );
 }
