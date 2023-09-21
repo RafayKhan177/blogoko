@@ -2,7 +2,7 @@
 
 import React from "react";
 import Comments from "../../components/comment/Comments";
-import QandASection from "./QandASection"; // Import the new component
+import QandA from "../../components/qAndA/QandA"; 
 import { blogData } from "../../static";
 
 export default function BlogView()  {
@@ -11,15 +11,13 @@ export default function BlogView()  {
   return (
     <div className="container mx-auto p-4">
       
-      <hr className="my-8" />
 
       {/* Comments Section */}
       <Comments comments={blogData[0].comments} blogID={blogData.id} />
 
-      <hr className="my-8" />
 
       {/* Separate Q&A Section */}
-      <QandASection qa={blogs.qa} blogID={blogData.id}/>
+      <QandA qa={blogData[0].qa} blogID={blogData.id}/>
 
       <hr className="my-8" />
 
