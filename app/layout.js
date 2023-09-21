@@ -1,13 +1,13 @@
 //-------------------------------------DEPENDENCIES
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
-// import { ToastContainer } from "react-toastify";
-// import { Inter } from "next/font/google";
-//-------------------------------------COMPONENTS
+import { ToastContainer } from "react-toastify";
 //--------------------------------------STYLES
 import "react-toastify/dist/ReactToastify.css";
 import "@mantine/core/styles.css";
 import "./globals.css";
+//-------------------------------------COMPONENTS
 import { AppBar } from "./components/appBar/AppBar";
+import Footer from "./components/footer/FooterSocial";
 
 export const metadata = {
   title: "My Mantine app",
@@ -24,6 +24,8 @@ export default function RootLayout({ children }) {
         <MantineProvider>
           <AppBar />
           {children}
+          <Footer />
+          <ToastContainer />
         </MantineProvider>
       </body>
     </html>
