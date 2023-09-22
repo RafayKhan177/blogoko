@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Button,
@@ -9,39 +9,51 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import {
+  getLoggedInUserDocData,
+  saveUserDataToUserDoc,
+} from "../firebase/functions/authentications";
 
 const MyAccount = () => {
-  const [fullName, setFullName] = useState(""); // State for Full Name
-  const [phone, setPhone] = useState(""); // State for Phone
-  const [profilePicture, setProfilePicture] = useState(null); // State for Profile Picture
-  const [isEditing, setIsEditing] = useState(false); // State for edit mode
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [profilePicture, setProfilePicture] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [userData, setUserData] = useState(null);
 
-  // Function to handle Full Name change
-  const handleFullNameChange = (e) => {
-    setFullName(e.target.value);
-    setIsEditing(true);
+  useEffect(() => {
+    const fetchLoggedInUserDocData = async () => {
+      const userData = await getLoggedInUserDocData();
+      setUserData(userData);
+    };
+
+    fetchLoggedInUserDocData();
+  }, []);
+
+  const newUserData = {
+    fullName: fullName,
+    phone: phone,
   };
 
-  // Function to handle Phone change
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-    setIsEditing(true);
-  };
-
-  // Function to handle profile picture change
-  const handleProfilePictureChange = (e) => {
-    const file = e.target.files[0];
-    setProfilePicture(URL.createObjectURL(file));
-    setIsEditing(true);
+  const handleSave = () => {
+    saveUserDataToUserDoc("abdulrafaykhan857@gmail.com", newUserData);
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <Paper className="p-4 flex flex-col items-center" elevation={3}>
         <div className="relative">
-          <Avatar className="w-20 h-20 mb-4" src={profilePicture}>
+          <Avatar
+            className="w-20 h-20 mb-4"
+            src={
+              isEditing
+                ? profilePicture
+                : userData
+                ? profilePicture.profilePicture || null
+                : null
+            }
+          >
             {/* Display user's profile picture here */}
           </Avatar>
           <label
@@ -56,7 +68,7 @@ const MyAccount = () => {
           accept="image/*"
           id="profilePicture"
           style={{ display: "none" }}
-          onChange={handleProfilePictureChange}
+          onChange={(e) => setProfilePicture(e.target.files[0])}
         />
         <Typography component="h1" variant="h5">
           Profile
@@ -70,8 +82,14 @@ const MyAccount = () => {
             label="Full Name"
             name="fullName"
             autoComplete="name"
-            value={fullName}
-            onChange={handleFullNameChange}
+            value={
+              isEditing
+                ? fullName
+                : userData
+                ? userData.fullName || "Not Found"
+                : "Not Found"
+            }
+            onChange={(e) => setFullName(e.target.value)}
             className="mb-4"
           />
           <TextField
@@ -82,8 +100,14 @@ const MyAccount = () => {
             label="Phone"
             name="phone"
             autoComplete="tel"
-            value={phone}
-            onChange={handlePhoneChange}
+            value={
+              isEditing
+                ? phone
+                : userData
+                ? userData.phone || "Not Found"
+                : "Not Found"
+            }
+            onChange={(e) => setPhone(e.target.value)}
             className="mb-4"
           />
           {isEditing ? (
@@ -92,7 +116,7 @@ const MyAccount = () => {
               variant="contained"
               color="primary"
               className="mb-4"
-              // Add a function to save changes here
+              onClick={handleSave}
             >
               Save
             </Button>
@@ -102,6 +126,7 @@ const MyAccount = () => {
               variant="contained"
               color="primary"
               className="mb-4 bg-green-700 hover:bg-green-900"
+              onClick={() => setIsEditing(true)}
             >
               Edit
             </Button>
