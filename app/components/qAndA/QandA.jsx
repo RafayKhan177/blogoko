@@ -6,7 +6,6 @@ const image =
   "https://img.freepik.com/free-vector/faqs-concept-illustration_114360-6685.jpg?w=826&t=st=1695301189~exp=1695301789~hmac=9030c815de50c26a33da8f1ad4a58e2fc478545f4961e7943254785831436dfd";
 
 export default function QandA({ qa }) {
-    console.log(qa)
   return (
     <div className={classes.wrapper}>
       <Container size="lg">

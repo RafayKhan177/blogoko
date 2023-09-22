@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
 import React, { useState } from "react";
-import ReactQuill from "react-quill"; // Import the text editor
-import "react-quill/dist/quill.snow.css"; // Import the styles for the text editor
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { Button, TextField, Grid, Paper } from "@mui/material";
 
 const Home = () => {
-  const [blogContent, setBlogContent] = useState(""); // State to store blog content
-  const [draft, setDraft] = useState(false); // State to track if the blog is a draft
+  const [blogContent, setBlogContent] = useState("");
+  const [draft, setDraft] = useState(false);
   const formats = [
     "bold",
     "italic",
@@ -24,17 +24,27 @@ const Home = () => {
     "intent",
   ];
 
-  // Function to handle saving the blog as a draft
+  const getCurrentDate = () => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0"); // January is 0!
+    const yyyy = today.getFullYear();
+    return dd + "/" + mm + "/" + yyyy;
+  };
+
   const handleSaveDraft = () => {
-    // Your code to save the blog content as a draft goes here
     setDraft(true);
   };
 
-  // Function to handle publishing the blog
   const handlePublish = () => {
-    // Your code to publish the blog goes here
     setDraft(false);
-    console.log(blogContent);
+
+    // Format the current date in "dd/mm/yyyy" format
+    const currentDate = getCurrentDate();
+
+    // Log the blog content and the current date
+    console.log("Published Date:", currentDate);
+    console.log("Blog Content:", blogContent);
   };
 
   return (
@@ -47,7 +57,6 @@ const Home = () => {
                 label="Blog Title"
                 variant="outlined"
                 fullWidth
-                // Add your logic to handle the blog title
               />
             </Grid>
             <Grid item xs={12}>
@@ -55,7 +64,6 @@ const Home = () => {
                 label="Blog Small Description"
                 variant="outlined"
                 fullWidth
-                // Add your logic to handle the blog title
               />
             </Grid>
             <Grid item xs={12}>
