@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import { IconHeart } from "@tabler/icons-react";
 import {
   Card,
@@ -12,29 +13,39 @@ import {
 import classes from "./BlogCard.module.css";
 
 export default function BlogCard({ blog }) {
-  const features = blog.tags.map((tag) => (
-    <Badge variant="light" key={tag.label} leftSection={tag.emoji}>
-      {tag.label}
-    </Badge>
-  ));
+  const features =
+    blog &&
+    blog.tags.map((tag, index) => (
+      <Badge
+        variant="light"
+        key={index}
+        leftSection={tag.emoji || "not found"}
+      >
+        {tag.label || "not found"}
+      </Badge>
+    ));
 
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section>
-        <Image src={blog.image} alt={blog.title} height={180} />
+        <Image
+          src={blog?.image || "not found"}
+          alt={blog?.title || "not found"}
+          height={180}
+        />
       </Card.Section>
 
       <Card.Section className={classes.section} mt="md">
         <Group justify="apart">
           <Text fz="lg" fw={500}>
-            {blog.title}
+            {blog?.title || "not found"}
           </Text>
           <Badge size="sm" variant="light">
-            {blog.date}
+            {blog?.date || "not found"}
           </Badge>
         </Group>
         <Text fz="sm" mt="xs">
-          <TextWithLimit text={blog.description} charLimit={90} />
+          <TextWithLimit text={blog?.description || "not found"} charLimit={90} />
         </Text>
       </Card.Section>
 
@@ -43,12 +54,8 @@ export default function BlogCard({ blog }) {
           Perfect for you, if you enjoy
         </Text>
         <Group gap={7} mt={5}>
-          {blog.category}
-          {blog.tags.map((tag, index) => (
-            <Badge key={index} size="sm" variant="light">
-              {tag.label}
-            </Badge>
-          ))}
+          {blog?.category || "not found"}
+          {features || "not found"}
         </Group>
       </Card.Section>
 
@@ -66,8 +73,6 @@ export default function BlogCard({ blog }) {
 
 function TextWithLimit({ text, charLimit }) {
   const truncatedText =
-    text.length > charLimit ? text.slice(0, charLimit) + '...' : text;
-  return (
-    <span>{truncatedText}</span>
-  );
+    text.length > charLimit ? text.slice(0, charLimit) + "..." : text;
+  return <span>{truncatedText}</span>;
 }
