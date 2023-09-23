@@ -1,10 +1,14 @@
 import { getAuth } from "firebase/auth";
 import {
+  collection,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import { app } from "../config";
 import { toast } from "react-toastify";
@@ -27,4 +31,18 @@ async function fetchBlogById(blogPostId) {
   }
 }
 
-export { fetchBlogById };
+async function fetchAllMyBlogs() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const blogsRef = collection(db, "blogs");
+  const blogsQuery = query(blogsRef, where("email", "==", user.email));
+  try {
+    const blogsSnapshot = await getDocs(blogsQuery);
+    const blogs = blogsSnapshot.docs.map((blogDoc) => blogDoc.data());
+    return blogs;
+  } catch (error) {
+    notify("Error fetching blogs:", error);
+  }
+}
+
+
+export { fetchBlogById, fetchAllMyBlogs };
