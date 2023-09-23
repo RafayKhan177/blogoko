@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, TextField, Grid, Paper } from "@mui/material";
-import { postBlog, fetchBlogById } from "../../../firebase/functions/upload";
-import { useRouter } from 'next/navigation'
+import { postBlog } from "../../../firebase/functions/upload";
+import { fetchBlog } from "../../../firebase/functions/fetch";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const router = useRouter();
@@ -44,13 +45,13 @@ const Home = () => {
       setBlogId(id);
       return id;
     };
-  
+
     const blogId = splitIdFromUrl();
-  
+
     if (blogId !== "new") {
       fetchBlog();
     }
-  
+
     async function fetchBlog() {
       try {
         const blogPost = await fetchBlogById(blogId);
@@ -62,11 +63,9 @@ const Home = () => {
         console.error("Error fetching blog post:", error);
       }
     }
-  
-    return () => {
-    };
+
+    return () => {};
   }, []);
-  
 
   const handlePublish = async (state) => {
     const postData = {
@@ -77,7 +76,7 @@ const Home = () => {
       state: state,
     };
     await postBlog(postData, blogId || null);
-    handleNavigate('http://localhost:3000/upload/blog/new')
+    handleNavigate("http://localhost:3000/upload/blog/new");
   };
 
   return (
