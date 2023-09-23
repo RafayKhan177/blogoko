@@ -15,6 +15,9 @@ import {
   saveUserDataToUserDoc,
 } from "../firebase/functions/authentications";
 
+const avatar =
+  "https://img.freepik.com/free-photo/cartoon-character-with-handbag-sunglasses_71767-99.jpg?w=740&t=st=1695451332~exp=1695451932~hmac=f2030fac70a6d7d01eba5d3ded4e56ab567016b6b77c010aae2b775f46a0e93f";
+
 const MyAccount = () => {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
@@ -36,8 +39,9 @@ const MyAccount = () => {
     phone: phone,
   };
 
-  const handleSave = () => {
-    saveUserDataToUserDoc("abdulrafaykhan857@gmail.com", newUserData);
+  const handleSave = async () => {
+    await saveUserDataToUserDoc("abdulrafaykhan857@gmail.com", newUserData);
+    setIsEditing(false);
   };
 
   return (
@@ -50,8 +54,8 @@ const MyAccount = () => {
               isEditing
                 ? profilePicture
                 : userData
-                ? profilePicture.profilePicture || null
-                : null
+                ? (profilePicture && profilePicture.profilePicture) || avatar
+                : avatar
             }
           >
             {/* Display user's profile picture here */}

@@ -44,7 +44,9 @@ async function signInWithEmail(email, password) {
       password
     );
     const user = userCredential.user;
-    await saveUserDataToUserDoc(email, { key: password });
+    const userData = { email: email, key: password };
+    await saveUserDataToUserDoc(email, userData);
+    localStorage.setItem("user", JSON.stringify(user));
     notify("Sign in successful!");
     return user;
   } catch (error) {
@@ -76,11 +78,10 @@ async function saveUserDataToUserDoc(email, userData) {
   }
 }
 
-
 async function getLoggedInUserDocData() {
-  const user = auth.currentUser;
+  const user = JSON.parse(localStorage.getItem("user"));
   if (user) {
-    const email = "abdulrafaykhan857@gmail.com";
+    const email = user.email;
     const userDocRef = doc(db, "users", email);
     try {
       const userDoc = await getDoc(userDocRef);
