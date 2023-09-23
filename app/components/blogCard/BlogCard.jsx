@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { IconHeart } from "@tabler/icons-react";
 import {
@@ -11,25 +11,36 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import classes from "./BlogCard.module.css";
+import { useRouter } from "next/navigation";
+
+const image =
+  "https://img.freepik.com/free-photo/female-hands-are-writing-notebook-flat-lay-conceptual-minimalism_169016-18185.jpg?w=826&t=st=1695469741~exp=1695470341~hmac=febb41317c442d6054b380ebbd3f06c545a4777d8c992c794314f532c22ccaf3";
 
 export default function BlogCard({ blog }) {
+  const router = useRouter();
+  const handleNavigate = (url) => {
+    router.push(url);
+  };
+
   const features =
-    blog &&
+    blog.tags &&
     blog.tags.map((tag, index) => (
-      <Badge
-        variant="light"
-        key={index}
-        leftSection={tag.emoji || "not found"}
-      >
+      <Badge variant="light" key={index} leftSection={tag.emoji || "not found"}>
         {tag.label || "not found"}
       </Badge>
     ));
 
   return (
-    <Card withBorder radius="md" p="md" className={classes.card}>
+    <Card
+      withBorder
+      radius="md"
+      p="md"
+      className={classes.card}
+      style={{ maxWidth: 400 }}
+    >
       <Card.Section>
         <Image
-          src={blog?.image || "not found"}
+          src={blog?.image || image}
           alt={blog?.title || "not found"}
           height={180}
         />
@@ -41,11 +52,14 @@ export default function BlogCard({ blog }) {
             {blog?.title || "not found"}
           </Text>
           <Badge size="sm" variant="light">
-            {blog?.date || "not found"}
+            {blog?.PublishedDate || "not found"}
           </Badge>
         </Group>
         <Text fz="sm" mt="xs">
-          <TextWithLimit text={blog?.description || "not found"} charLimit={90} />
+          <TextWithLimit
+            text={blog.description || "not found"}
+            charLimit={90}
+          />
         </Text>
       </Card.Section>
 
@@ -54,13 +68,17 @@ export default function BlogCard({ blog }) {
           Perfect for you, if you enjoy
         </Text>
         <Group gap={7} mt={5}>
-          {blog?.category || "not found"}
-          {features || "not found"}
+          {blog.category || null}
+          {features || null}
         </Group>
       </Card.Section>
 
       <Group mt="xs">
-        <Button radius="md" style={{ flex: 1 }}>
+        <Button
+          radius="md"
+          style={{ flex: 1 }}
+          onClick={() => handleNavigate(`/blog/${blog.id}`)}
+        >
           Show details
         </Button>
         <ActionIcon variant="default" radius="md" size={36}>
