@@ -6,8 +6,6 @@ import {
   getDocs,
   getFirestore,
   query,
-  setDoc,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { app } from "../config";

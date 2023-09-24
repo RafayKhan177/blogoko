@@ -2,30 +2,30 @@
 
 import React, { useState } from "react";
 import { Text, Avatar, Group } from "@mantine/core";
+import { addComment } from "../../firebase/functions/upload";
 
 export default function Comments({ comments, blogID }) {
-  const [newComment, setNewComment] = useState();
+  const [newComment, setNewComment] = useState("");
   const AllComments = comments || [];
 
   const handleAddComment = () => {
     if (newComment.trim() === "") {
       return;
     }
-    const newComment = {
-      id: Math.random().toString(),
-      name: "John Doe",
-      timestamp: new Date().toLocaleString(),
-      content: newComment,
+    const commentToAdd = {
+      comment: newComment,
     };
+    console.log(commentToAdd);
+    addComment(commentToAdd, blogID);
+    setNewComment(""); // Clear the input field after adding a comment
   };
 
   return (
     <div
       style={{
-        width: "100vw",
-        justifyContent: "center",
+        display: "flex",
+        flexDirection: "column",
         alignItems: "center",
-        justifyItems:"center"
       }}
     >
       <div
@@ -37,7 +37,7 @@ export default function Comments({ comments, blogID }) {
           boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           backgroundColor: "#f9f9f9",
           width: "60%",
-          alignSelf:"center"
+          alignSelf: "center",
         }}
       >
         <h2 style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Comments</h2>
@@ -71,23 +71,23 @@ export default function Comments({ comments, blogID }) {
           </button>
         </div>
 
-        {AllComments.map((comment) => (
-          <div key={comment.id} className="mt-4">
+        {AllComments.map((item) => (
+          <div key={item.id} className="mt-4">
             <Group>
               <Avatar
                 src="https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=250&q=80"
-                alt={comment.name}
+                alt={item.email}
                 radius="xl"
               />
               <div>
-                <Text size="sm">{comment.name}</Text>
-                <Text size="xs" c="dimmed">
-                  {comment.timestamp}
+                <Text size="sm">{item.email}</Text>
+                <Text size="xs" color="dimmed">
+                  {item.timestamp || "Opps"}
                 </Text>
               </div>
             </Group>
             <Text pl={54} pt="sm" size="sm">
-              {comment.content}
+              {item.coment}
             </Text>
           </div>
         ))}
