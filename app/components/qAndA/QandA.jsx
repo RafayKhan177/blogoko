@@ -28,16 +28,17 @@ export default function QandA({ qa }) {
               defaultValue="reset-password"
               variant="outlined"
             >
-              {qa.map((qaItem, index) => (
-                <Accordion.Item
-                  key={index}
-                  value={qaItem.question}
-                  className={classes.item}
-                >
-                  <Accordion.Control>{qaItem.question}</Accordion.Control>
-                  <Accordion.Panel>{qaItem.answer}</Accordion.Panel>
-                </Accordion.Item>
-              ))}
+              {qa &&
+                qa.map((qaItem, index) => (
+                  <Accordion.Item
+                    key={index}
+                    value={qaItem.question}
+                    className={classes.item}
+                  >
+                    <Accordion.Control>{qaItem.question}</Accordion.Control>
+                    <Accordion.Panel>{qaItem.answer}</Accordion.Panel>
+                  </Accordion.Item>
+                ))}
             </Accordion>
           </Grid.Col>
         </Grid>

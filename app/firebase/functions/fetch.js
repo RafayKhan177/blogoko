@@ -23,7 +23,7 @@ async function fetchBlogById(blogPostId) {
   try {
     const blogPost = await getDoc(blogPostDocRef);
     if (!blogPost.exists()) {
-      throw new Error("Blog post not found.");
+      notify("Blog post not found.");
     }
     return blogPost.data();
   } catch (error) {

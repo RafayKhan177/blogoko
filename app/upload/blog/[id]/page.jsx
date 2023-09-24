@@ -5,7 +5,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Button, TextField, Grid, Paper } from "@mui/material";
 import { postBlog } from "../../../firebase/functions/upload";
-import { fetchBlog } from "../../../firebase/functions/fetch";
+import { fetchBlogById } from "../../../firebase/functions/fetch";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
@@ -49,7 +49,7 @@ const Home = () => {
     const blogId = splitIdFromUrl();
 
     if (blogId !== "new") {
-      fetchBlog();
+      fetchBlogById();
     }
 
     async function fetchBlog() {

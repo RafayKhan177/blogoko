@@ -1,28 +1,38 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Comments from "../../components/comment/Comments";
 import QandA from "../../components/qAndA/QandA";
-import { blogData } from "../../static";
+import { fetchBlogById } from "../../firebase/functions/fetch";
 
 export default function BlogView() {
-  console.log({ blogData });
+  const [blog, setBlog] = useState([]);
+
+  useEffect(() => {
+    const splitIdFromUrl = async () => {
+      const url = window.location.href;
+      const parts = url.split("/");
+      const id = parts[parts.length - 1];
+      const blogData = await fetchBlogById(id);
+      console.log(blogData);
+      setBlog(blogData);
+    };
+    splitIdFromUrl();
+  }, []);
 
   return (
     <div className="container mx-auto p-4">
-      {blogData.map((blogEntry) => (
-        <div key={blogEntry.blogID}>
-          <h2>{blogEntry.title}</h2>
-          {blogEntry.blogContent}
-
+      {blog && (
+        <div key={blog.id}>
+          <h2>{blog.title}</h2>
+          <div dangerouslySetInnerHTML={{ __html: blog.blogContent }} />
+  
           {/* Comments Section */}
-          <Comments comments={blogEntry.comments} blogID={blogEntry.blogID} />
-
+          <Comments comments={blog.comments} blogID={blog.id} />
+  
           {/* Separate Q&A Section */}
-          <QandA qa={blogEntry.qa} blogID={blogEntry.blogID} />
-
-          <hr className="my-8" />
-
+          <QandA qa={blog.qa} blogID={blog.id} />
+  
           <div className="flex justify-end">
             <div className="mr-4">
               {/* Add social sharing buttons here */}
@@ -35,7 +45,8 @@ export default function BlogView() {
             </div>
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
+  
 }
