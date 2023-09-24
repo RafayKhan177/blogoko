@@ -1,4 +1,5 @@
 "use client";
+import React, { useState, useEffect } from "react"; // Import React and useEffect
 import {
   HoverCard,
   Group,
@@ -17,21 +18,55 @@ import {
   ScrollArea,
   rem,
   useMantineTheme,
+  Menu,
+  Avatar,
 } from "@mantine/core";
 import { MantineLogo } from "@mantine/ds";
+import cx from "clsx";
 import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown } from "@tabler/icons-react";
+import {
+  IconChevronDown,
+  IconHeart,
+  IconLogout,
+  IconSettings,
+  IconTrash,
+} from "@tabler/icons-react";
 import classes from "./AppBar.module.css";
 import { blogsCategories } from "../../static";
+import { getLoggedInUserDocData } from "../../firebase/functions/authentications";
+import Link from "next/link";
+import { Chip } from "@mui/material";
+
+const avatar =
+  "https://img.freepik.com/free-photo/3d-illustration-blonde-girl-traditional-german-dress-light-background_125540-3595.jpg?t=st=1695525769~exp=1695529369~hmac=134f02e344692fde51d09037668321164872acc1f773aa147a85b8acb1afdc53&w=826";
 
 export function AppBar() {
+  const theme = useMantineTheme();
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const theme = useMantineTheme();
+  const [opened, { toggle }] = useDisclosure(false);
+  const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [user, setUser] = useState({
+    fullName: "...",
+    email: "loading@gmail.com",
+    image: avatar,
+  });
+
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getLoggedInUserDocData();
+      setUser(user);
+    }
+    fetchUser();
+  }, []);
 
   const links = blogsCategories.map((item) => (
-    <UnstyledButton className={classes.subLink} key={item.title}>
+    <UnstyledButton
+      className={classes.subLink}
+      style={{ marginTop: 5, marginLeft: 10 }}
+      key={item.title}
+    >
       <Group wrap="nowrap" align="flex-start">
         <ThemeIcon size={34} variant="default" radius="md">
           <item.icon
@@ -58,9 +93,9 @@ export function AppBar() {
           <MantineLogo size={30} />
 
           <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="#" className={classes.link}>
+            <Link href="/home" className={classes.link}>
               Home
-            </a>
+            </Link>
             <HoverCard
               width={600}
               position="bottom"
@@ -111,19 +146,112 @@ export function AppBar() {
                 </div>
               </HoverCard.Dropdown>
             </HoverCard>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
+            <Link href="/blogs/liked" className={classes.link}>
+              Liked Blogs
+            </Link>
           </Group>
+          {user && user == null ? (
+            <Group visibleFrom="sm">
+              <Button variant="default">Log in</Button>
+              <Button>Sign up</Button>
+            </Group>
+          ) : (
+            <Group visibleFrom="sm">
+              <Burger
+                opened={opened}
+                onClick={toggle}
+                hiddenFrom="xs"
+                size="sm"
+              />
 
-          <Group visibleFrom="sm">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
+              <Menu
+                width={260}
+                position="bottom-end"
+                transitionProps={{ transition: "pop-top-right" }}
+                onClose={() => setUserMenuOpened(false)}
+                onOpen={() => setUserMenuOpened(true)}
+                withinPortal
+              >
+                <Menu.Target>
+                  <UnstyledButton
+                    className={cx(classes.user, {
+                      [classes.userActive]: userMenuOpened,
+                    })}
+                  >
+                    <Group gap={7}>
+                      <Avatar
+                        src={user.image}
+                        alt={user.fullName}
+                        radius="xl"
+                        size={20}
+                      />
+                      <Text fw={500} size="sm" lh={1} mr={3}>
+                        {user.fullName}
+                      </Text>
+                      <IconChevronDown
+                        style={{ width: rem(12), height: rem(12) }}
+                        stroke={1.5}
+                      />
+                    </Group>
+                  </UnstyledButton>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Label>Genral</Menu.Label>
 
+                  <Menu.Item
+                    leftSection={
+                      <IconHeart
+                        style={{ width: rem(16), height: rem(16) }}
+                        color={theme.colors.red[6]}
+                        stroke={1.5}
+                      />
+                    }
+                  >
+                    Liked posts
+                  </Menu.Item>
+                  <Menu.Label>Settings</Menu.Label>
+
+                  <Menu.Item
+                    leftSection={
+                      <IconLogout
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                  >
+                    Logout
+                  </Menu.Item>
+
+                  <Menu.Item
+                    leftSection={
+                      <IconSettings
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                  >
+                    Account
+                  </Menu.Item>
+
+                  <Menu.Divider />
+
+                  <Menu.Label>Danger zone</Menu.Label>
+
+                  <Menu.Item
+                    color="red"
+                    leftSection={
+                      <IconTrash
+                        style={{ width: rem(16), height: rem(16) }}
+                        stroke={1.5}
+                      />
+                    }
+                  >
+                    Delete account
+                  </Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            </Group>
+          )}
           <Burger
             opened={drawerOpened}
             onClick={toggleDrawer}
@@ -144,12 +272,12 @@ export function AppBar() {
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
           <Divider my="sm" />
 
-          <a href="#" className={classes.link}>
+          <Link href="#" className={classes.link}>
             Home
-          </a>
+          </Link>
           <UnstyledButton className={classes.link} onClick={toggleLinks}>
             <Center inline>
-              <Box component="span" mr={5}>
+              <Box component="span" ml={15}>
                 Features
               </Box>
               <IconChevronDown
@@ -159,19 +287,38 @@ export function AppBar() {
             </Center>
           </UnstyledButton>
           <Collapse in={linksOpened}>{links}</Collapse>
-          <a href="#" className={classes.link}>
-            Learn
-          </a>
-          <a href="#" className={classes.link}>
-            Academy
-          </a>
 
           <Divider my="sm" />
+          {user && user == null ? (
+            <Group justify="center" grow pb="xl" px="md">
+              <Button variant="default">Log in</Button>
+              <Button>Sign up</Button>
+            </Group>
+          ) : (
+            <>
+              <Chip style={{fontSize:12,height:22,marginLeft:5}} label="Genral" />
+              <Link href="#" className={classes.link}>
+                <IconHeart className={classes.icon} />
+                Liked posts
+              </Link>
+              <Chip style={{fontSize:12,height:22,marginLeft:5}} label="Settings" />
 
-          <Group justify="center" grow pb="xl" px="md">
-            <Button variant="default">Log in</Button>
-            <Button>Sign up</Button>
-          </Group>
+              <Link href="#" className={classes.link}>
+                <IconLogout className={classes.icon} />
+                Logout
+              </Link>
+              <Link href="#" className={classes.link}>
+                <IconSettings className={classes.icon} />
+                Account
+              </Link>
+              <Chip style={{fontSize:12,height:22,marginLeft:5}} label="Danger zone" />
+
+              <Link href="#" className={classes.link}>
+                <IconTrash className={classes.icon} />
+                Delete account
+              </Link>
+            </>
+          )}
         </ScrollArea>
       </Drawer>
     </Box>

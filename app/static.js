@@ -81,14 +81,4 @@ const blogData = [
   },
 ];
 
-const pages = [
-  { name: "Home", url: "" },
-  { name: "Account", url: "" },
-  { name: "Login", url: "" },
-  { name: "Sign Up", url: "" },
-  { name: "My Blogs", url: "" },
-  { name: "Upload", url: "" },
-  { name: "", url: "" },
-];
-
 export { blogsCategories, blogData };
