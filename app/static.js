@@ -40,45 +40,4 @@ const blogsCategories = [
   },
 ];
 
-const blogData = [
-  {
-    tags: [
-      { label: "Sunny weather" },
-      { label: "Onsite zoo" },
-      { label: "Sea" },
-      { label: "Nature" },
-      { label: "Water sports" },
-    ],
-    comments: [
-      {
-        email: "mock@gmail.com",
-        name: "Alice",
-        timestamp: "September 6, 2023",
-        content: "This place looks amazing! I can't wait to visit.",
-      },
-      {
-        id: "2",
-        name: "Bob",
-        timestamp: "September 7, 2023",
-        content: "I went there last summer, and it was fantastic!",
-      },
-    ],
-    qa: [
-      {
-        email: "mock@gmail.com",
-        name: "Alice",
-        question: "Is there a restaurant nearby?",
-        answer: "Yes, there are several restaurants within walking distance.",
-      },
-      {
-        email: "mock@gmail.com",
-        name: "Bob",
-        question: "Are pets allowed?",
-        answer:
-          "Yes, pets are allowed in some apartments. Make sure to check with the hotel.",
-      },
-    ],
-  },
-];
-
-export { blogsCategories, blogData };
+export { blogsCategories };
