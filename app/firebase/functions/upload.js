@@ -8,26 +8,26 @@ import {
 } from "firebase/firestore";
 import { app } from "../config";
 import { toast } from "react-toastify";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
-const auth = getAuth(app);
+const storage = getStorage();
 const db = getFirestore();
 
 const notify = (msg) => toast(msg);
 
-async function postBlog(postData, blogID) {
+async function postBlog(postData) {
   const user = JSON.parse(localStorage.getItem("user"));
-  const id = user.uid + Date.now();
-
+  const id = postData.id === "new" ? user.uid + Date.now() : postData.id;
   const blogPostDocRef = doc(db, "blogs", id);
-
+  const url = await uploadPicture(postData.pic);
+  console.log(postData);
   try {
-    // Validate the input
     if (
       postData.title === "" ||
       postData.description === "" ||
       postData.blogContent === "" ||
       postData.tags === "" ||
-      postData.qas === "" // Changed from postData.qas to postData.qasData
+      postData.qas === ""
     ) {
       throw new Error("Please fill in all of the required fields.");
     }
@@ -35,62 +35,51 @@ async function postBlog(postData, blogID) {
     alert(error.message);
     return;
   }
-
-  // Check if the blog with the specified blogId already exists.
   const blogPostDoc = await getDoc(blogPostDocRef);
-
   if (blogPostDoc.exists()) {
-    // Update the existing blog post.
-    try {
-      await updateDoc(blogPostDocRef, postData);
-      notify("Your Blog is Updated Successfully");
-    } catch (error) {
-      console.error("Error updating blog post:", error);
-      notify("Error updating blog post");
-    }
+    await updateDoc(blogPostDocRef, { ...postData, pic: url });
+    notify("Your Blog is Updated Successfully");
   } else {
-    // Create a new blog post.
-    try {
-      await setDoc(blogPostDocRef, {
-        ...postData,
-        email: user.email,
-        id: id,
-      });
-      notify("Your Blog is Published Successfully");
-    } catch (error) {
-      console.error("Error creating blog post:", error);
-      notify("Error creating blog post");
-    }
+    await setDoc(blogPostDocRef, {
+      ...postData,
+      email: user.email,
+      id: id,
+      pic: url,
+    });
+    notify("Your Blog is Published Successfully");
   }
 }
 
 async function addComment(commentData, blogID) {
   const user = JSON.parse(localStorage.getItem("user"));
   const email = user.email;
-
   const blogPostDocRef = doc(db, "blogs", blogID);
-
-  // Check if the blog with the specified blogId already exists.
   const blogPostDoc = await getDoc(blogPostDocRef);
-
-  // Ensure that the comments field is iterable.
   const comments = blogPostDoc.data().comments || [];
-
-  // Update the existing blog post with the new comment.
   if (blogPostDoc.exists()) {
     await updateDoc(blogPostDocRef, {
       comments: [...comments, { ...commentData, email }],
     });
   } else {
-    // Create a new blog post with the comment.
     await setDoc(blogPostDocRef, {
       comments: [{ ...commentData, email }],
       ...commentData,
       email,
     });
   }
-
   notify("Your comment is added successfully!");
+}
+
+async function uploadPicture(file) {
+  const storageRef = ref(storage, "blogsPic");
+
+  // 'file' comes from the Blob or File API
+  const snapshot = await uploadBytes(storageRef, file);
+
+  // Get the download URL of the uploaded image
+  const url = await getDownloadURL(snapshot.ref);
+
+  return url;
 }
 
 export { postBlog, addComment };

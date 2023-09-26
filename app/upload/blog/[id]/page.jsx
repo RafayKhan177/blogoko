@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Chip from "@mui/material/Chip";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
+import DropzoneButton from "../../../components/dropzone/DropzoneButton";
 
 export default function Home() {
   const currentDate = new Date().toLocaleDateString("en-GB");
@@ -57,6 +58,7 @@ export default function Home() {
           description: blogPost.description,
           blogContent: blogPost.blogContent,
           id: blogPost.id,
+          pic: blogPost.pic,
         }));
         setTagsData((prevData) => ({
           ...prevData,
@@ -75,11 +77,14 @@ export default function Home() {
   }, []);
 
   // -------------------------------------State
+  const [selectedImage, setSelectedImage] = useState(null);
+
   const [blogData, setBlogData] = useState({
     content: "",
     title: "",
     description: "",
     id: "",
+    pic: "",
   });
 
   const [tagsData, setTagsData] = useState({
@@ -140,6 +145,7 @@ export default function Home() {
       tags: tagsData.tags,
       qas: qasData.qas,
       state: state,
+      pic: selectedImage,
     };
 
     try {
@@ -150,6 +156,10 @@ export default function Home() {
     }
   };
 
+  const handleImageSelect = (image) => {
+    setSelectedImage(image);
+  };
+
   const handleNavigate = (url) => {
     router.push(url);
   };
@@ -157,6 +167,7 @@ export default function Home() {
   // -------------------------------------Render
   return (
     <div className="bg-gray-100 min-h-screen py-8">
+      <DropzoneButton onImageSelect={handleImageSelect} image={blogData.pic} />
       <div className="container mx-auto">
         <Paper elevation={3} className="p-4">
           <Grid container spacing={2}>
