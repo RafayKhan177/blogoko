@@ -21,12 +21,12 @@ export default function BlogCard({ blog }) {
   const handleNavigate = (url) => {
     router.push(url);
   };
-
+  
   const features =
     blog.tags &&
     blog.tags.map((tag, index) => (
       <Badge variant="light" key={index} leftSection={tag.emoji || "not found"}>
-        {tag.label || "not found"}
+        {tag.tag || "not found"}
       </Badge>
     ));
 

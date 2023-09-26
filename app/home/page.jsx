@@ -2,23 +2,37 @@
 import { Container, Grid } from "@mui/material";
 import BlogCard from "../components/blogCard/BlogCard";
 import Heading from "../components/Heading";
-import { blogsCategories, blogData } from "../static";
+import { blogsCategories } from "../static";
 import Features from "../components/features/Features";
 import HeroBullets from "../components/hero/HeroBullets";
+import { useEffect, useState } from "react";
+import { fetchAllMyBlogs } from "../firebase/functions/fetch";
+import { useRouter } from "next/navigation";
 
 const Blogs = ({ blogs }) => {
+  const router = useRouter();
+  const handleNavigate = (url) => {
+    router.push(url);
+  };
   return (
     <Grid container spacing={2}>
-      {blogs.map((blog, index) => (
-        <Grid item key={index} xs={12} sm={4}>
-          <BlogCard blog={blog} />
-        </Grid>
-      ))}
+      {blogs &&
+        blogs.map((blog, index) => (
+          <Grid item key={index} xs={12} sm={4}>
+            <BlogCard blog={blog} />
+          </Grid>
+        ))}
     </Grid>
   );
 };
 
 export default function Home() {
+  const [blogData, setBlogData] = useState([]);
+  useEffect(() => {
+    fetchAllMyBlogs().then((blogs) => {
+      setBlogData(blogs);
+    });
+  }, []);
   return (
     <div>
       <HeroBullets />

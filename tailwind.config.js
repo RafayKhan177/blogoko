@@ -14,5 +14,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
-}
+  plugins: [
+    require('mantine/tailwind'),
+  ],
+};

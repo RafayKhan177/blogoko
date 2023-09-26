@@ -49,8 +49,8 @@ const useStyles = createStyles((theme) => ({
 })); */
 
 .wrapper {
-    padding-top: rem(80px);
-    padding-bottom: rem(50px);
+    padding-top: rem(30px);
+    padding-bottom: rem(130px);
   }
   
   .item {

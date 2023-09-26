@@ -18,10 +18,27 @@ async function postBlog(postData, blogID) {
   const user = JSON.parse(localStorage.getItem("user"));
   const id = user.uid + Date.now();
 
-  const blogPostDocRef = doc(db, "blogs", blogID);
+  const blogPostDocRef = doc(db, "blogs", id);
+
+  try {
+    // Validate the input
+    if (
+      postData.title === "" ||
+      postData.description === "" ||
+      postData.blogContent === "" ||
+      postData.tags === "" ||
+      postData.qas === "" // Changed from postData.qas to postData.qasData
+    ) {
+      throw new Error("Please fill in all of the required fields.");
+    }
+  } catch (error) {
+    alert(error.message);
+    return;
+  }
 
   // Check if the blog with the specified blogId already exists.
   const blogPostDoc = await getDoc(blogPostDocRef);
+
   if (blogPostDoc.exists()) {
     // Update the existing blog post.
     try {
@@ -42,7 +59,7 @@ async function postBlog(postData, blogID) {
       notify("Your Blog is Published Successfully");
     } catch (error) {
       console.error("Error creating blog post:", error);
-      notify("Error uploading blog post");
+      notify("Error creating blog post");
     }
   }
 }

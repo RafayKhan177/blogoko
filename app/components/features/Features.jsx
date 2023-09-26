@@ -9,11 +9,22 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import classes from "./FeaturesImages.module.css";
+import { useRouter } from "next/navigation";
 
 export default function Features({ categories }) {
   const theme = useMantineTheme();
+  const router = useRouter();
+  const handleNavigate = (url) => {
+    router.push(url);
+  };
+
   const items = categories.map((item) => (
-    <div className={classes.item} key={item.title}>
+    <div
+      style={{ cursor: "pointer" }}
+      onClick={() => handleNavigate(`/blogs/categories/${item.title}`)}
+      className={classes.item}
+      key={item.title}
+    >
       <ThemeIcon
         variant="light"
         className={classes.itemIcon}

@@ -37,7 +37,7 @@ export default function Home() {
       const url = window.location.href;
       const parts = url.split("/");
       const id = parts[parts.length - 1];
-      setBlogData((prevData) => ({ ...prevData, id }));
+      setBlogData((prevData) => ({ ...prevData, id: id || null }));
       return id;
     };
 
@@ -50,12 +50,13 @@ export default function Home() {
     async function fetchBlog() {
       try {
         const blogPost = await fetchBlogById(blogId);
-        console.log(blogPost);
         setBlogData((prevData) => ({
           ...prevData,
           content: blogPost.blogContent,
           title: blogPost.title,
           description: blogPost.description,
+          blogContent: blogPost.blogContent,
+          id: blogPost.id,
         }));
         setTagsData((prevData) => ({
           ...prevData,
@@ -78,33 +79,34 @@ export default function Home() {
     content: "",
     title: "",
     description: "",
+    id: "",
   });
 
-  console.log(blogData);
-
   const [tagsData, setTagsData] = useState({
-    tags: [{ tag: "example" }],
-    tag: "example",
+    tags: [],
+    tag: "",
   });
 
   const [qasData, setQasData] = useState({
-    qas: [{ q: "example", a: "example" }],
+    qas: [],
     q: "",
     a: "",
   });
 
   // -------------------------------------Handle
 
-  const handleNavigate = (url) => {
-    router.push(url);
-  };
   const handleTag = (action) => {
     if (!action) {
       setTagsData({ tags: [], tag: "" });
-    } else if (tagsData.tags.length < 6) {
+    } else {
+      if (tagsData.tags === undefined || tagsData.tags === null) {
+        tagsData.tags = [];
+      }
+      if (tagsData.tags.length < 5) {
+        tagsData.tags = [...tagsData.tags, { tag: tagsData.tag }];
+      }
       setTagsData({
         ...tagsData,
-        tags: [...tagsData.tags, { tag: tagsData.tag }],
         tag: "",
       });
     }
@@ -113,10 +115,15 @@ export default function Home() {
   const handleQa = (action) => {
     if (!action) {
       setQasData({ qas: [], q: "", a: "" });
-    } else if (qasData.qas.length < 6) {
+    } else {
+      if (qasData.qas === undefined || qasData.qas === null) {
+        qasData.qas = [];
+      }
+      if (qasData.qas.length < 5) {
+        qasData.qas = [...qasData.qas, { q: qasData.q, a: qasData.a }];
+      }
       setQasData({
         ...qasData,
-        qas: [...qasData.qas, { q: qasData.q, a: qasData.a }],
         q: "",
         a: "",
       });
@@ -125,16 +132,26 @@ export default function Home() {
 
   const handlePublish = async (state) => {
     const postData = {
+      id: blogData.id,
       PublishedDate: currentDate,
       title: blogData.title,
       description: blogData.description,
       blogContent: blogData.content,
       tags: tagsData.tags,
-      qasData: tagsData.qas,
+      qas: qasData.qas,
       state: state,
     };
-    await postBlog(postData, blogData.id || null);
-    handleNavigate("http://localhost:3000/upload/blog/new");
+
+    try {
+      await postBlog(postData, blogData.id || null);
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  };
+
+  const handleNavigate = (url) => {
+    router.push(url);
   };
 
   // -------------------------------------Render
