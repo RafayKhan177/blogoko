@@ -6,8 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "@mantine/core/styles.css";
 import "./globals.css";
 //-------------------------------------COMPONENTS
-import {AppBar} from "./components/appBar/AppBar";
-import Footer from "./components/footer/FooterSocial";
+// import {AppBar} from "./components/appBar/AppBar";
+// import Footer from "./components/footer/FooterSocial";
 
 export const metadata = {
   title: "My Mantine app",
@@ -22,9 +22,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <MantineProvider>
-          <AppBar />
+          {/* <AppBar /> */}
           {children}
-          <Footer />
+          {/* <Footer /> */}
           <ToastContainer />
         </MantineProvider>
       </body>

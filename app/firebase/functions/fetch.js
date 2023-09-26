@@ -42,5 +42,16 @@ async function fetchAllMyBlogs() {
   }
 }
 
+async function fetchBlogsByCategory(category) {
+  const blogsRef = collection(db, "blogs");
+  const blogsQuery = query(blogsRef, where("category", "==", category));
+  try {
+    const blogsSnapshot = await getDocs(blogsQuery);
+    const blogs = blogsSnapshot.docs.map((blogDoc) => blogDoc.data());
+    return blogs;
+  } catch (error) {
+    notify("Error fetching blogs:", error);
+  }
+}
 
-export { fetchBlogById, fetchAllMyBlogs };
+export { fetchBlogById, fetchAllMyBlogs, fetchBlogsByCategory };
