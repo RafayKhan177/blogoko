@@ -8,7 +8,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-
+import { app } from "../firebase/config";
 import { toast } from "react-toastify";
 const db = getFirestore();
 

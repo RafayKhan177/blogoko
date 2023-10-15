@@ -7,6 +7,7 @@ import {
 } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { app } from "../firebase/config";
 
 const storage = getStorage();
 const db = getFirestore();
