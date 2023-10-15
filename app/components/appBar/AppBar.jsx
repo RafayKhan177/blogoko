@@ -33,7 +33,7 @@ import {
 } from "@tabler/icons-react";
 import classes from "./AppBar.module.css";
 import { blogsCategories } from "../../static";
-import { getLoggedInUserDocData } from "../../firebase/functions/authentications";
+import { getLoggedInUserDocData } from "../../api/functions/authentications";
 import Link from "next/link";
 import { Chip } from "@mui/material";
 
@@ -48,7 +48,7 @@ export function AppBar() {
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
   const [user, setUser] = useState({
-    fullName: "...",
+    fullName: "LOADING",
     email: "loading@gmail.com",
     image: avatar,
   });

@@ -10,7 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { app } from "../config";
+import { app } from "../firebase/config";
 import { toast } from "react-toastify";
 
 const auth = getAuth(app);

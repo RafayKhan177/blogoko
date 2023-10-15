@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Comments from "../../components/comment/Comments";
 import QandA from "../../components/qAndA/QandA";
-import { fetchBlogById } from "../../firebase/functions/fetch";
+import { fetchBlogById } from "../../api/functions/fetch";
 
 export default function BlogView() {
   const [blog, setBlog] = useState([]);

@@ -8,10 +8,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { app } from "../config";
-import { toast } from "react-toastify";
 
-const auth = getAuth(app);
+import { toast } from "react-toastify";
 const db = getFirestore();
 
 const notify = (msg) => toast(msg);

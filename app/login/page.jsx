@@ -2,7 +2,7 @@
 
 import { Container, TextField, Button, Grid } from "@mui/material";
 import { useState } from "react";
-import { signInWithEmail } from "../firebase/functions/authentications";
+import { signInWithEmail } from "../api/functions/authentications";
 
 const Login = () => {
   const [email, setEmail] = useState("");

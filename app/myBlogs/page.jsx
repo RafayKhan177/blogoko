@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import BlogCard from "../components/blogCard/BlogCard";
-import { fetchAllMyBlogs } from "../firebase/functions/fetch";
+import { fetchAllMyBlogs } from "../api/functions/fetch";
 import { Container, Grid } from "@mantine/core";
 
 export default function Page() {

@@ -4,7 +4,7 @@ import { useState } from "react"; // Import useState
 import { Container, Paper, Typography, TextField, Button } from "@mui/material";
 import Head from "next/head";
 import Link from "next/link";
-import { signUpWithEmail } from "../firebase/functions/authentications";
+import { signUpWithEmail } from "../api/functions/authentications";
 
 export default function SignUp() {
   // Create state variables for form fields

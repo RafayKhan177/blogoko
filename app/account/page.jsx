@@ -13,7 +13,7 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import {
   getLoggedInUserDocData,
   saveUserDataToUserDoc,
-} from "../firebase/functions/authentications";
+} from "../api/functions/authentications";
 
 const avatar =
   "https://img.freepik.com/free-photo/cartoon-character-with-handbag-sunglasses_71767-99.jpg?w=740&t=st=1695451332~exp=1695451932~hmac=f2030fac70a6d7d01eba5d3ded4e56ab567016b6b77c010aae2b775f46a0e93f";

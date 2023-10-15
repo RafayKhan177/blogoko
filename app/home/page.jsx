@@ -6,7 +6,7 @@ import { blogsCategories } from "../static";
 import Features from "../components/features/Features";
 import HeroBullets from "../components/hero/HeroBullets";
 import { useEffect, useState } from "react";
-import { fetchAllMyBlogs } from "../firebase/functions/fetch";
+import { fetchAllMyBlogs } from "../api/functions/fetch";
 
 export default function Home() {
   const [blogData, setBlogData] = useState([]);

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Text, Avatar, Group } from "@mantine/core";
-import { addComment } from "../../firebase/functions/upload";
+import { addComment } from "../../api/functions/upload";
 
 export default function Comments({ comments, blogID }) {
   const [newComment, setNewComment] = useState("");

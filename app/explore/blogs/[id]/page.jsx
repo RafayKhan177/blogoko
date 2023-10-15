@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchBlogsByCategory } from "../../../firebase/functions/fetch";
+import { fetchBlogsByCategory } from "../../../api/functions/fetch";
 import BlogCard from "../../../components/blogCard/BlogCard";
 
 export default function Page() {

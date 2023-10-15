@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import {
   doc,
   getDoc,
@@ -6,7 +5,6 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { app } from "../config";
 import { toast } from "react-toastify";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
